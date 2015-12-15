@@ -30,10 +30,6 @@ class RequestHandler(socketserver.StreamRequestHandler):
           tl.append(pendrive[int(self.rfile.readline().strip())])   
           input_q.put(tl)
           l=True
-
-
-
-
           while l:
               try:
                     l=self.rfile.readline()
@@ -47,6 +43,7 @@ class RequestHandler(socketserver.StreamRequestHandler):
               
               l=l.strip()     
               set_q.put((tl,l))  
+
 
 
 
@@ -69,9 +66,6 @@ def shut_down(l):
       else:
             s.send('shutdown -P now'+escape)
       s.close()
-
-
-
 
 def note_pad(l):
       s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -109,9 +103,6 @@ def set_strict(arg):
                   data='STRICT'
             else:
                   data='REQUEST'
-
-
-
       else:
             if arg[0]=='False':
                   data='REQUEST'
@@ -148,8 +139,6 @@ def un_lock(arg):
             s.connect((get_ip(a),2121))
             s.send(':unlock'+escape)
             s.close()
-
-
             
 def custom_command(arg):
       if arg.__len__()==0:
@@ -181,14 +170,13 @@ def BroadCast():
 def check(comm):
       if comm.__len__()==0:
             return
+
       
       if '\\' == comm[0]:
             l=comm[1:].split(' ')
             fun=command[l[0]]
             print(l[1:])
             fun(l[1:])
-
-
       elif ':'==comm[0]:
             l=comm[1:].split(' ')
             fun=sys_command[l[0]]
@@ -259,3 +247,5 @@ if __name__ == '__main__':
     root.protocol('WM_DELETE_WINDOW', closesafely)
     root.after(500,backup)
     root.mainloop()
+    
+    
